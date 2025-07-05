@@ -34,8 +34,7 @@ class WebsocketsModule(reactContext: ReactApplicationContext) :
 
   override fun sendMessage(message: String?): Boolean {
     message ?: return false
-    jsiWebsockets.sendMessage(message)
-    return true
+    return jsiWebsockets.sendMessage(message)
   }
 
   override fun addListener(eventName: String?) {

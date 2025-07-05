@@ -68,9 +68,9 @@ public class JsiWebsockets extends WebSocketListener {
   }
 
   @DoNotStrip
-  void sendMessage(String message) {
-    if (webSocket == null || state == WsState.CLOSED) return;
-    webSocket.send(message);
+  boolean sendMessage(String message) {
+    if (webSocket == null || state == WsState.CLOSED) return false;
+    return webSocket.send(message);
   }
 
   @Override
