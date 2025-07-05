@@ -1,6 +1,6 @@
 {
   "name": "react-native-websockets",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Te",
   "main": "src/index.tsx",
   "module": "src/index.tsx",

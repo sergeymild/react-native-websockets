@@ -66,7 +66,14 @@ RCT_EXPORT_MODULE()
 }
 
 -(void) sendMessageToJs:(NSString *)messageType with:(NSString *) message {
-  [self sendEventWithName:@"onNativeMessage" body:@{@"type": messageType, @"message": message}];
+  NSString *key = @"message";
+  if ([messageType  isEqual: @"onStateChange"]) {
+      key = @"state";
+  } else if ([messageType  isEqual: @"onError"]) {
+    key = @"error";
+  }
+  
+  [self sendEventWithName:@"onNativeMessage" body:@{@"type": messageType, key: message}];
 }
 
 -(void)gracefulClose {

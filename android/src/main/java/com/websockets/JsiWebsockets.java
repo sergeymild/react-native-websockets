@@ -15,6 +15,7 @@ import java.io.EOFException;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -38,7 +39,13 @@ public class JsiWebsockets extends WebSocketListener {
     if (!context.hasActiveReactInstance()) return;
     WritableMap map = Arguments.createMap();
     map.putString("type", eventName);
-    map.putString("message", message);
+    if (Objects.equals(eventName, "onStateChange")) {
+      map.putString("state", message);
+    } else if (Objects.equals(eventName, "onError")) {
+      map.putString("error", message);
+    } else {
+      map.putString("message", message);
+    }
     context.emitDeviceEvent("onNativeMessage", map);
   }
 
