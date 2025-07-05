@@ -7,6 +7,7 @@ export interface Spec extends TurboModule {
   close: () => void;
   state: () => 'CONNECTING' | 'OPEN' | 'CLOSING' | 'CLOSED';
   sendMessage: (message: string) => boolean;
+  sendBytesMessage: (message: string) => boolean;
 
   // Events
   addListener(eventName: string): void;

@@ -37,6 +37,11 @@ class WebsocketsModule(reactContext: ReactApplicationContext) :
     return jsiWebsockets.sendMessage(message)
   }
 
+  override fun sendBytesMessage(message: String?): Boolean {
+    message ?: return false
+    return jsiWebsockets.sendBytesMessage(message)
+  }
+
   override fun addListener(eventName: String?) {
     // IOS only
   }

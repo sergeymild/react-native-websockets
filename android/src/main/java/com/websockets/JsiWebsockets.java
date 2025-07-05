@@ -73,6 +73,12 @@ public class JsiWebsockets extends WebSocketListener {
     return webSocket.send(message);
   }
 
+  @DoNotStrip
+  boolean sendBytesMessage(String message) {
+    if (webSocket == null || state == WsState.CLOSED) return false;
+    return webSocket.send(ByteString.encodeUtf8(message));
+  }
+
   @Override
   public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
     System.out.println("AndroidWS.closed");

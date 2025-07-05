@@ -48,21 +48,26 @@ RCT_EXPORT_MODULE()
 }
 
 - (NSNumber *)sendMessage:(NSString *) message {
-  return [self wsSendMessage:message] == 1 ? @1 : @0;
+  if (wsTask == nil || ![wsState  isEqual: @"OPEN"]) return @0;
+
+    auto socketMessage = [[NSURLSessionWebSocketMessage alloc] initWithString:message];
+    [wsTask sendMessage:socketMessage completionHandler:^(NSError * _Nullable error) {}];
+    return @1;
+}
+
+- (NSNumber *)sendBytesMessage:(NSString *) message {
+  if (wsTask == nil || ![wsState  isEqual: @"OPEN"]) return @0;
+  NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+  
+  auto socketMessage = [[NSURLSessionWebSocketMessage alloc] initWithData:data];
+  [wsTask sendMessage:socketMessage completionHandler:^(NSError * _Nullable error) {}];
+  return @1;
 }
 
 - (void)close { 
   if (wsTask != nil) {
       [wsTask cancelWithCloseCode:NSURLSessionWebSocketCloseCodeNormalClosure reason:nil];
     }
-}
-
--(BOOL)wsSendMessage:(NSString*)message {
-  if (wsTask == nil || ![wsState  isEqual: @"OPEN"]) return false;
-
-  auto socketMessage = [[NSURLSessionWebSocketMessage alloc] initWithString:message];
-  [wsTask sendMessage:socketMessage completionHandler:^(NSError * _Nullable error) {}];
-  return true;
 }
 
 -(void) sendMessageToJs:(NSString *)messageType with:(NSString *) message {
