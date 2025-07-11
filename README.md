@@ -68,6 +68,11 @@ function WebSocketExample() {
   const sendMessage = (message) => {
     ws.sendMessage(message);
   };
+  
+  // Example of sending a bynary message
+  const sendBytesMessage = (message) => {
+    ws.sendBytesMessage(message);
+  };
 
   // Example of checking connection state
   const checkState = () => {

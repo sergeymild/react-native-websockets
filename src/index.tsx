@@ -63,6 +63,10 @@ class _ixWebSocket {
     return Websockets.sendMessage(message);
   }
 
+  sendBytesMessage(message: string): boolean {
+    return Websockets.sendBytesMessage(message);
+  }
+
   unsubscribeAll() {
     this.events.forEach((e) => e.remove());
     this.baseCallback = () => {};
